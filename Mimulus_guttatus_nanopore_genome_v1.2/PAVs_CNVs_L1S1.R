@@ -160,10 +160,10 @@ absent_L1_present_S1 <- cnv_withID[sapply(lapply(cnv$L1, `%in%`, "0"), any),]
 write.table(absent_L1_present_S1, file="supplemental_tables/absent_L1_present_S1.txt",
             quote=FALSE,col.names=FALSE,row.names=FALSE)
 
-# Copy number of genes in IM62, S1, and L1
+# Copy number of genes in S1, and L1
 cnv_withID$cn_diff <- cnv_withID$L1 - cnv_withID$S1 
-write.table(cnv_withID, file="supplemental_tables/IM62_L1_S1_copy_numbers.txt",
-            quote=FALSE,col.names=FALSE,row.names=FALSE)
+# write.table(cnv_withID, file="supplemental_tables/L1_S1_copy_numbers.txt",
+#             quote=FALSE,col.names=FALSE,row.names=FALSE)
 
 # Same number of copies and not a CNV
 same_cn <- cnv_withID %>% 
@@ -171,10 +171,10 @@ same_cn <- cnv_withID %>%
 
 # Different number of copies and thus CNV.
 # This includes PAVs as well
-diff_cn <- cnv_withID %>% 
-  subset(cn_diff != 0)
-write.table(diff_cn, file = "supplemental_tables/different_copy_numbers.txt",
-            quote=FALSE, col.names = FALSE, row.names = FALSE)
+# diff_cn <- cnv_withID %>% 
+#   subset(cn_diff != 0)
+# write.table(diff_cn, file = "supplemental_tables/different_copy_numbers.txt",
+#             quote=FALSE, col.names = FALSE, row.names = FALSE)
 
 # Tandem arrays
 tandem_arrays <- as.data.frame(table(unique(tandem[,c(1,4)])$geneCount))
