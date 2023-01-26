@@ -6,11 +6,8 @@ library(GENESPACE)
 library(ggplot2)
 library(dplyr)
 
-runwd <- file.path("/Users/lesliekollar/Desktop/mimulus_genome_R/mimulus_genome/")
-setwd("/Users/lesliekollar/Desktop/mimulus_genome_R/mimulus_genome/")
-
 #Read in the pangenome database
-pgdb <- fread("results/S1_pangenomeDB.txt.gz",na.strings = c("", "NA"))
+pgdb <- fread("results/L1_pangenomeDB.txt.gz",na.strings = c("", "NA"))
 pgff <- fread("results/gffWithOgs.txt.gz",na.strings = c("", "NA"))
 
 #Create two new tables for each of the genomes, removing genes not in the pangenome
@@ -51,7 +48,7 @@ write.table(c(unique(S1nonsynt$id.y),S1u$id),file="results/S1_nonsyntenic.txt",
 
 #Get genes in arraypairs arrays
 #Add the arrayID to pgdb
-pge <- setorder(merge(pgdb,pgff[,c(2,11)],by="id"), pgChr, pgOrd, na.last = T)
+pge <- setorder(merge(pgdb,pgff[,c(2,15)],by="id"), pgChr, pgOrd, na.last = T)
 #Count count arrays with more than one gene in them
 arraycount <- as.data.frame(table(unique(pge[,c(1,15)])$arrayID))
 #subset out those genes with an array count of more than 1
@@ -146,24 +143,19 @@ dictionary2$V2 <- NULL #removing column
 
 cnv_withID <- cnv %>% left_join(dictionary2,by=c("pgChr", "pgOrd" ,"pgID"))
 
-
-
 ### Sub-setting the cnv dataframe 
 
 absent_s1_present_L1 <- cnv_withID[sapply(lapply(cnv$S1, `%in%`, "0"), any),]
 absent_L1_present_S1 <- cnv_withID[sapply(lapply(cnv$L1, `%in%`, "0"), any),]
 
 cnv_withID$cn_diff <- cnv_withID$L1 - cnv_withID$S1 
-write.table(cnv_withID, file="supplemental_tables/IM62_L1_S1_copy_numbers.txt",
-            quote=FALSE,col.names=FALSE,row.names=FALSE)
 
 same_cn <- cnv_withID %>% 
   subset(cn_diff == 0)
 
 diff_cn <- cnv_withID %>% 
   subset(cn_diff != 0)
-write.table(diff_cn, file = "supplemental_tables/different_copy_numbers.txt",
-            quote=FALSE, col.names = FALSE, row.names = FALSE)
+
 
 tandem_arrays <- as.data.frame(table(unique(tandem[,c(1,4)])$geneCount))
 
