@@ -171,10 +171,10 @@ same_cn <- cnv_withID %>%
 
 # Different number of copies and thus CNV.
 # This includes PAVs as well
-# diff_cn <- cnv_withID %>% 
-#   subset(cn_diff != 0)
-# write.table(diff_cn, file = "supplemental_tables/different_copy_numbers.txt",
-#             quote=FALSE, col.names = FALSE, row.names = FALSE)
+diff_cn <- cnv_withID %>%
+  subset(cn_diff != 0)
+write.table(diff_cn, file = "supplemental_tables/L1_S1_different_copy_numbers.txt",
+            quote=FALSE, col.names = FALSE, row.names = FALSE)
 
 # Tandem arrays
 tandem_arrays <- as.data.frame(table(unique(tandem[,c(1,4)])$geneCount))
