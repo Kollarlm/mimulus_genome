@@ -81,19 +81,23 @@ gpar <- set_syntenyParams(gsParam = gpar)
 
 gpar <- synteny(gsParam = gpar)
 
+tiff(filename = "S1_L1_plot.tiff",height = 20, width = 30, units="cm",
+     compression = "lzw", res = 300)
 
 plot_riparian(gpar,
               blackBg = FALSE,
               gapProp = 0.01)
+dev.off()
 
-regs <- data.table(
-  genome= c("L1", "S1", "IM62"),
-  chr = c("chr8","chr8"),
-  start= c(824557, 820545), #Walking out the start sites (i.e. getting smaller)
-  end= c(7624865, 6576983), #Walking out the end sites (i.e. getting bigger)
-  cols = c("green", "yellow"))
 
-plot_riparianHits(gpar, onlyTheseRegions = regs)
+# regs <- data.table(
+#   genome= c("L1", "S1", "IM62"),
+#   chr = c("chr8","chr8"),
+#   start= c(824557, 820545), #Walking out the start sites (i.e. getting smaller)
+#   end= c(7624865, 6576983), #Walking out the end sites (i.e. getting bigger)
+#   cols = c("green", "yellow"))
+# 
+# plot_riparianHits(gpar, onlyTheseRegions = regs)
 
 # ripSouceDat <- plot_riparianHits(
 #   gpar, 
