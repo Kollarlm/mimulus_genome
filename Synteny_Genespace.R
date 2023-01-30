@@ -23,7 +23,8 @@
 library(GENESPACE)
 
 #Set Path
-runwd <- file.path("/Users/lesliekollar/Desktop/Mimulus_guttatus_nanopore_genome_v1.2_wIM62")
+runwd <- file.path("/Users/lesliekollar/Desktop/mimulus_genome_R/mimulus_genome/")
+setwd(runwd)
 
 gids <- c("S1","L1", "IM62") #Whatever you list FIRST here will be the reference genome in the pan-genome function.
 
@@ -80,10 +81,13 @@ gpar <- set_syntenyParams(gsParam = gpar)
 
 gpar <- synteny(gsParam = gpar)
 
+tiff(filename = "S1_L1_IM62_plot.tiff",height = 20, width = 30, units="cm",
+     compression = "lzw", res = 300)
 
 plot_riparian(gpar,
               blackBg = FALSE,
               gapProp = 0.01)
+dev.off()
 
 regs <- data.table(
   genome= c("L1", "S1", "IM62"),

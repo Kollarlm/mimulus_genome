@@ -5,6 +5,9 @@ tandem_cutoff=10 #Must be within this number of genes of a gene with same arrayI
 library(GENESPACE)
 library(ggplot2)
 library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(venneuler)
 
 runwd <- file.path("//Users/lesliekollar/Desktop/mimulus_genome_R/mimulus_genome/Mimulus_guttatus_nanopore_genome_v1.2")
 setwd(runwd)
@@ -193,5 +196,34 @@ ggplot(data=tandem_arrays, aes(y=tandem_arrays$Freq, x=tandem_arrays$Var1)) +
     
 
 
+## Gene Content Summary
+genes_shared <- cnv %>%   filter(L1 != 0) %>% 
+          filter(S1 != 0)
 
-  
+genes_L1_specific <- cnv %>% 
+  filter(S1 == 0)  
+
+genes_S1_specific <- cnv %>% 
+  filter(L1 == 0)  
+
+
+#Filtering by chr8
+cnv_chr8 <- cnv_withID %>%  
+  filter(pgChr == "chr8") # It doesnt matter if you use pgChr.x or .y because they are the same
+
+# Both L1 and S1 have to have copies
+cnv_chr8_shared <- cnv_chr8 %>% 
+  filter(L1 != 0) %>% 
+  filter(S1 != 0)
+
+# L1 doesnt have
+cnv_chr8_notshared_L1 <- cnv_chr8 %>% 
+  filter(L1 == 0) 
+
+
+# S1 doesnt have 
+cnv_chr8_notshared_S1 <- cnv_chr8 %>% 
+  filter(S1 == 0)  
+
+
+
