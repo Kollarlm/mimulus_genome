@@ -89,31 +89,22 @@ plot_riparian(gpar,
               gapProp = 0.01)
 dev.off()
 
-## Plotting CHr8 only
+## Plotting Chr8 only
 
-regs <- data.frame(
+regs <- data.table(
   chr = c("chr8","chr8"),
   genome = c("S1","L1"),
   start= c(0, 0), #Walking out the start sites (i.e. getting smaller)
-  end= c(7624865, 6576983),
-  cols = c("gold", "green"))
+  end= c(24050684, 23499395),
+  cols = c("green", "gold"))
 
 
 tiff(filename = "S1_L1_chr8.tiff",height = 20, width = 30, units="cm",
      compression = "lzw", res = 300)
 
-plot_riparian(gpar,
-              onlyTheseRegions = regs)
-dev.off()
+plot_riparian(gpar,onlyTheseRegions = regs)
 
-# regs <- data.table(
-#   genome= c("L1", "S1", "IM62"),
-#   chr = c("chr8","chr8"),
-#   start= c(824557, 820545), #Walking out the start sites (i.e. getting smaller)
-#   end= c(7624865, 6576983), #Walking out the end sites (i.e. getting bigger)
-#   cols = c("green", "yellow"))
-# 
-# plot_riparianHits(gpar, onlyTheseRegions = regs)
+dev.off()
 
 # ripSouceDat <- plot_riparianHits(
 #   gpar, 
